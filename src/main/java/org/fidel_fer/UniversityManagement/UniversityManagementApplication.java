@@ -26,8 +26,10 @@ public class UniversityManagementApplication {
     @Bean
     CommandLineRunner run(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder) {
         return args -> {
+            /* So, you can use this user to login and only this admin is authenticated to perform all the
+             * actions on this system. Let's test. */
             User user = new User();
-            user.setUsername("admin");
+            user.setUsername("admin"); //This admin will be created everytime you'll run the application
             user.setFullName("Admin Name");
             user.setPassword(bCryptPasswordEncoder.encode("admin"));
             userRepository.save(user);

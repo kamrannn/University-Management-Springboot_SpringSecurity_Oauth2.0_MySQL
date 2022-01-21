@@ -154,5 +154,5 @@ public class SubjectService {
             return new ResponseEntity<>("There is no subject against this ID", HttpStatus.OK);
         }
     }
-    
+
 }
