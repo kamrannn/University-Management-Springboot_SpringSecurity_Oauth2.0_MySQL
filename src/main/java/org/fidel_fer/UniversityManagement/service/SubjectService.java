@@ -1,9 +1,7 @@
 package org.fidel_fer.UniversityManagement.service;
 
-import org.fidel_fer.UniversityManagement.model.Group;
-import org.fidel_fer.UniversityManagement.model.Student;
-import org.fidel_fer.UniversityManagement.model.Subject;
-import org.fidel_fer.UniversityManagement.model.Teacher;
+import org.fidel_fer.UniversityManagement.model.*;
+import org.fidel_fer.UniversityManagement.repository.ClassroomRepository;
 import org.fidel_fer.UniversityManagement.repository.StudentRepository;
 import org.fidel_fer.UniversityManagement.repository.SubjectRepository;
 import org.fidel_fer.UniversityManagement.repository.TeacherRepository;
@@ -20,12 +18,14 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
+    private final ClassroomRepository classroomRepository;
 
     @Autowired
-    public SubjectService(SubjectRepository subjectRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
+    public SubjectService(SubjectRepository subjectRepository, StudentRepository studentRepository, TeacherRepository teacherRepository, ClassroomRepository classroomRepository) {
         this.subjectRepository = subjectRepository;
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
+        this.classroomRepository = classroomRepository;
     }
 
     public ResponseEntity<Object> createSubject(Subject subject) {
@@ -137,5 +137,22 @@ public class SubjectService {
         }
     }
 
+    public ResponseEntity<Object> assignClassroomToASubject(List<Classroom> classroomsList, Long subjectId) {
+        Optional<Subject> subject = subjectRepository.findById(subjectId);
+        if (subject.isPresent()) {
+            for (Classroom classroom : classroomsList
+            ) {
+                Optional<Classroom> eachClassroom = classroomRepository.findById(classroom.getId());
+                if (eachClassroom.isPresent()) {
+                    subject.get().getClassroomList().add(eachClassroom.get());
+                }
+            }
+            subjectRepository.save(subject.get());
+            return new ResponseEntity<>("Classrooms has been assigned to the subject " + subject.get().getName(), HttpStatus.OK);
 
+        } else {
+            return new ResponseEntity<>("There is no subject against this ID", HttpStatus.OK);
+        }
+    }
+    
 }

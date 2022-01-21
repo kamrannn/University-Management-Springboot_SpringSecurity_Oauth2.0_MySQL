@@ -17,27 +17,27 @@ public class TeacherController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Object> listOfTeachers() {
+    public ResponseEntity<Object> listOfTeachers(@RequestHeader(name = "Authorization") String token) {
         return teacherService.getListOfTeachers();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addTeacher(@RequestBody Teacher teacher) {
+    public ResponseEntity<Object> addTeacher(@RequestHeader(name = "Authorization") String token, @RequestBody Teacher teacher) {
         return teacherService.createTeacher(teacher);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateTeacher(@RequestBody Teacher teacher) {
+    public ResponseEntity<Object> updateTeacher(@RequestHeader(name = "Authorization") String token, @RequestBody Teacher teacher) {
         return teacherService.updateTeacher(teacher);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteTeacher(@RequestParam(name = "id") Long teacherId) {
+    public ResponseEntity<Object> deleteTeacher(@RequestHeader(name = "Authorization") String token, @RequestParam(name = "id") Long teacherId) {
         return teacherService.deleteTeacherById(teacherId);
     }
 
     @GetMapping("/getById")
-    public ResponseEntity<Object> getTeacherById(@RequestParam(name = "id") Long teacherId) {
+    public ResponseEntity<Object> getTeacherById(@RequestHeader(name = "Authorization") String token, @RequestParam(name = "id") Long teacherId) {
         return teacherService.getTeacherById(teacherId);
     }
 }

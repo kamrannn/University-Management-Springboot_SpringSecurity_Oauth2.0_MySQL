@@ -17,27 +17,27 @@ public class ClassroomController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Object> listOfClassrooms() {
+    public ResponseEntity<Object> listOfClassrooms(@RequestHeader(name = "Authorization") String token) {
         return classroomService.getListOfClassrooms();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addClassroom(@RequestBody Classroom classroom) {
+    public ResponseEntity<Object> addClassroom(@RequestHeader(name = "Authorization") String token, @RequestBody Classroom classroom) {
         return classroomService.createClassroom(classroom);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateClassroom(@RequestBody Classroom classroom) {
+    public ResponseEntity<Object> updateClassroom(@RequestHeader(name = "Authorization") String token, @RequestBody Classroom classroom) {
         return classroomService.updateClassroom(classroom);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteClassroom(@RequestParam(name = "id") String classroomId) {
+    public ResponseEntity<Object> deleteClassroom(@RequestHeader(name = "Authorization") String token, @RequestParam(name = "id") String classroomId) {
         return classroomService.deleteClassroomById(classroomId);
     }
 
     @GetMapping("/getById")
-    public ResponseEntity<Object> getClassroomById(@RequestParam(name = "id") String classroomId) {
+    public ResponseEntity<Object> getClassroomById(@RequestHeader(name = "Authorization") String token, @RequestParam(name = "id") String classroomId) {
         return classroomService.getClassroomById(classroomId);
     }
 

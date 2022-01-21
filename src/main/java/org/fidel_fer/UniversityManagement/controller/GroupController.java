@@ -17,27 +17,27 @@ public class GroupController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Object> listOfGroups() {
+    public ResponseEntity<Object> listOfGroups(@RequestHeader(name = "Authorization") String token) {
         return groupService.getListOfGroups();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addGroup(@RequestBody Group group) {
+    public ResponseEntity<Object> addGroup(@RequestHeader(name = "Authorization") String token, @RequestBody Group group) {
         return groupService.createGroup(group);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateGroup(@RequestBody Group group) {
+    public ResponseEntity<Object> updateGroup(@RequestHeader(name = "Authorization") String token, @RequestBody Group group) {
         return groupService.updateGroup(group);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteGroup(@RequestParam(name = "id") Long groupId) {
+    public ResponseEntity<Object> deleteGroup(@RequestHeader(name = "Authorization") String token, @RequestParam(name = "id") Long groupId) {
         return groupService.deleteGroupById(groupId);
     }
 
     @GetMapping("/getById")
-    public ResponseEntity<Object> getGroupById(@RequestParam(name = "id") Long groupId) {
+    public ResponseEntity<Object> getGroupById(@RequestHeader(name = "Authorization") String token, @RequestParam(name = "id") Long groupId) {
         return groupService.getGroupById(groupId);
     }
 }

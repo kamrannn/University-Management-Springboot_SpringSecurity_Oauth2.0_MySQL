@@ -17,27 +17,27 @@ public class StudentController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Object> listOfStudents() {
+    public ResponseEntity<Object> listOfStudents(@RequestHeader(name = "Authorization") String token) {
         return studentService.getListOfStudents();
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Object> addStudent(@RequestBody Student student) {
+    public ResponseEntity<Object> addStudent(@RequestHeader(name = "Authorization") String token, @RequestBody Student student) {
         return studentService.createStudent(student);
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Object> updateStudent(@RequestBody Student student) {
+    public ResponseEntity<Object> updateStudent(@RequestHeader(name = "Authorization") String token, @RequestBody Student student) {
         return studentService.updateStudent(student);
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteStudent(@RequestParam(name = "id") String studentId) {
+    public ResponseEntity<Object> deleteStudent(@RequestHeader(name = "Authorization") String token, @RequestParam(name = "id") String studentId) {
         return studentService.deleteStudentById(studentId);
     }
 
     @GetMapping("/getById")
-    public ResponseEntity<Object> getStudentById(@RequestParam(name = "id") String studentId) {
+    public ResponseEntity<Object> getStudentById(@RequestHeader(name = "Authorization") String token, @RequestParam(name = "id") String studentId) {
         return studentService.getStudentById(studentId);
     }
 }
