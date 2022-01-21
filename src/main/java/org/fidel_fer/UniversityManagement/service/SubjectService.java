@@ -1,9 +1,12 @@
 package org.fidel_fer.UniversityManagement.service;
 
+import org.fidel_fer.UniversityManagement.model.Group;
 import org.fidel_fer.UniversityManagement.model.Student;
 import org.fidel_fer.UniversityManagement.model.Subject;
+import org.fidel_fer.UniversityManagement.model.Teacher;
 import org.fidel_fer.UniversityManagement.repository.StudentRepository;
 import org.fidel_fer.UniversityManagement.repository.SubjectRepository;
+import org.fidel_fer.UniversityManagement.repository.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +19,13 @@ import java.util.Optional;
 public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
 
     @Autowired
-    public SubjectService(SubjectRepository subjectRepository, StudentRepository studentRepository) {
+    public SubjectService(SubjectRepository subjectRepository, StudentRepository studentRepository, TeacherRepository teacherRepository) {
         this.subjectRepository = subjectRepository;
         this.studentRepository = studentRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     public ResponseEntity<Object> createSubject(Subject subject) {
@@ -92,13 +97,45 @@ public class SubjectService {
             for (Student student : studentList
             ) {
                 Student student1 = studentRepository.getById(student.getId());
-                student1.getSubjectList().add(subject.get());
-                studentRepository.save(student1);
+                subject.get().getStudentList().add(student1);
+                /*subjectRepository.save(subject.get());*/
             }
+            subjectRepository.save(subject.get());
             return new ResponseEntity<>(subject.get().getName() + " is assigned to the students", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("There is no subject against this Id", HttpStatus.OK);
         }
     }
+
+    public ResponseEntity<Object> assignTeacherToSubject(Long teacherId, Long subjectId) {
+        Optional<Subject> subject = subjectRepository.findById(subjectId);
+        if (subject.isPresent()) {
+            Optional<Teacher> teacher = teacherRepository.findById(teacherId);
+            if (teacher.isPresent()) {
+                subject.get().getTeachersList().add(teacher.get());
+                subjectRepository.save(subject.get());
+                return new ResponseEntity<>("Teacher " + teacher.get().getFirstName() + " is assigned to the the subject " + subject.get().getName(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("There is no teacher against this id", HttpStatus.OK);
+            }
+        } else {
+            return new ResponseEntity<>("There is no subject against this id", HttpStatus.OK);
+        }
+    }
+
+    public ResponseEntity<Object> createGroupsForSubjects(List<Group> groupList, Long subjectId) {
+        Optional<Subject> subject = subjectRepository.findById(subjectId);
+        if (subject.isPresent()) {
+            for (Group group : groupList
+            ) {
+                subject.get().getGroupList().add(group);
+            }
+            subjectRepository.save(subject.get());
+            return new ResponseEntity<>("Groups has been made for the subject " + subject.get().getName(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("There is no subject against this id", HttpStatus.OK);
+        }
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package org.fidel_fer.UniversityManagement.controller;
 
+import org.fidel_fer.UniversityManagement.model.Group;
 import org.fidel_fer.UniversityManagement.model.Student;
 import org.fidel_fer.UniversityManagement.model.Subject;
 import org.fidel_fer.UniversityManagement.service.SubjectService;
@@ -47,5 +48,15 @@ public class SubjectController {
     @PostMapping("/AssignSubjectToStudents")
     public ResponseEntity<Object> assignSubjectToStudents(@RequestBody List<Student> studentList, @RequestParam(name = "subjectId") Long subjectId) {
         return subjectService.assignSubjectToStudents(studentList, subjectId);
+    }
+
+    @PostMapping("/AssignTeacherToSubject")
+    public ResponseEntity<Object> assignTeacherToSubject(@RequestParam(name = "teacherId") Long teacherId, @RequestParam(name = "subjectId") Long subjectId) {
+        return subjectService.assignTeacherToSubject(teacherId, subjectId);
+    }
+
+    @PostMapping("/createGroupsForSubject")
+    public ResponseEntity<Object> createGroupsForSubject(@RequestBody List<Group> groupList, @RequestParam(name = "subjectId") Long subjectId) {
+        return subjectService.createGroupsForSubjects(groupList, subjectId);
     }
 }

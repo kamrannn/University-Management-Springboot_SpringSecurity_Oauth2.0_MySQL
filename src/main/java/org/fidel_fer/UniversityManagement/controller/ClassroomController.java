@@ -32,14 +32,13 @@ public class ClassroomController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteClassroom(@RequestParam(name = "id") Long classroomId) {
+    public ResponseEntity<Object> deleteClassroom(@RequestParam(name = "id") String classroomId) {
         return classroomService.deleteClassroomById(classroomId);
     }
 
     @GetMapping("/getById")
-    public ResponseEntity<Object> getClassroomById(@RequestParam(name = "id") Long classroomId) {
+    public ResponseEntity<Object> getClassroomById(@RequestParam(name = "id") String classroomId) {
         return classroomService.getClassroomById(classroomId);
     }
-
 
 }

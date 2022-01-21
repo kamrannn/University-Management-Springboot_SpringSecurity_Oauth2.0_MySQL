@@ -55,7 +55,7 @@ public class ClassroomService {
         }
     }
 
-    public ResponseEntity<Object> deleteClassroomById(Long classroomId) {
+    public ResponseEntity<Object> deleteClassroomById(String classroomId) {
         try {
             Optional<Classroom> classroom = classroomRepository.findById(classroomId);
             if (classroom.isPresent()) {
@@ -69,7 +69,7 @@ public class ClassroomService {
         }
     }
 
-    public ResponseEntity<Object> getClassroomById(Long classroomId) {
+    public ResponseEntity<Object> getClassroomById(String classroomId) {
         try {
             Optional<Classroom> classroom = classroomRepository.findById(classroomId);
             if (classroom.isPresent()) {

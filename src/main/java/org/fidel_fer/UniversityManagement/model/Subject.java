@@ -28,4 +28,7 @@ public class Subject {
 
     @ManyToMany(targetEntity = Classroom.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Classroom> classroomList = new ArrayList<>();
+
+    @ManyToMany(targetEntity = Student.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Student> studentList = new ArrayList<>();
 }

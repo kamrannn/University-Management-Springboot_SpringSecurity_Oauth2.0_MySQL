@@ -26,6 +26,6 @@ public class Student {
     private int age;
     private String password;
     private String phoneNo;
-    @ManyToMany(targetEntity = Subject.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
-    private List<Subject> subjectList = new ArrayList<>();
+/*    @ManyToMany(targetEntity = Subject.class, fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Subject> subjectList = new ArrayList<>();*/
 }

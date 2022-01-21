@@ -16,9 +16,8 @@ import javax.persistence.Table;
 @Table(name = "classrooms")
 public class Classroom {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true)
-    private long id;
+    private String id;
     private Integer capacity;
     private String location;
 }
